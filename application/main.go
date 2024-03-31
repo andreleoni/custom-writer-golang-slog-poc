@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"log"
 	"log/slog"
-	"math/rand"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/andreleoni/random"
 )
 
 type CustomWriter struct{}
@@ -39,28 +40,16 @@ func main() {
 	for {
 		logger := slog.New(slog.NewJSONHandler(&CustomWriter{}, nil))
 
-		userName := fmt.Sprint("Name", randomStringRunes(4))
-		userEmail := fmt.Sprint("Email", randomStringRunes(4))
+		userName := fmt.Sprint("Name", random.Letters(4))
+		userEmail := fmt.Sprint("Email", random.Letters(4))
 
 		user := User{Name: userName, Email: userEmail}
 
 		logger.Info(
-			fmt.Sprint("Random error: ", randomStringRunes(10)),
+			fmt.Sprint("Random error: ", random.Letters(10)),
 			"user", user,
 		)
 
 		time.Sleep(1 * time.Second)
 	}
-}
-
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-func randomStringRunes(n int) string {
-	b := make([]rune, n)
-
-	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
-	}
-
-	return string(b)
 }

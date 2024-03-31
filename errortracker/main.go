@@ -33,6 +33,8 @@ func main() {
 	}()
 
 	http.HandleFunc("/log", func(w http.ResponseWriter, r *http.Request) {
+		slog.Info("GINHANDLER", "path", r.URL.Path)
+
 		var bodyBytes []byte
 		var err error
 
