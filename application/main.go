@@ -45,7 +45,7 @@ func main() {
 
 		user := User{Name: userName, Email: userEmail}
 
-		logger.Info(
+		logger.Error(
 			fmt.Sprint("Random error: ", random.Letters(10)),
 			"user", user,
 		)
