@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  errortracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: go run errortracker/main.go
+    volumes:
+      - .:/go/src/app
+
+  application:
+    depends_on:
+      - errortracker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: go run application/main.go
+    volumes:
+      - .:/go/src/app
