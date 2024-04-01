@@ -12,14 +12,20 @@ import (
 	"github.com/andreleoni/random"
 )
 
+// CustomWriter for slog
 type CustomWriter struct{}
 
 func (CustomWriter) Write(b []byte) (n int, err error) {
-	go http.Post("http://errortracker:9090/log", "application/json", strings.NewReader(string(b)))
+	go http.Post(
+		"http://errortracker:9090/log",
+		"application/json",
+		strings.NewReader(string(b)),
+	)
 
 	return 1, nil
 }
 
+// Entity
 type User struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
